@@ -229,8 +229,12 @@ if __name__ == "__main__":
     
     while discount_factor >= 0:
         # Run value iteration to find the optimal policy for the current gamma
-        V_opt, policy_opt = value_iteration(R, T, gamma=discount_factor, tol=1e-3)
-        
+        # Option 1: Value Iteration
+        # V_opt, policy_opt = value_iteration(R, T, gamma=discount_factor, tol=1e-3)
+
+        # Option 2: Policy Iteration
+        V_opt, policy_opt = policy_iteration(R, T, gamma=discount_factor, tol=1e-3)
+
         # Get the action at the starting state (state 0)
         action_at_start = policy_opt[0]
         
@@ -253,44 +257,3 @@ if __name__ == "__main__":
     if discount_factor < 0:
         print("No tipping point found. The agent always goes RIGHT.")
 
-
-# if __name__ == "__main__":
-#     SEED = 1234
-    
-#     # You will need to run this whole script three times, 
-#     # changing this value each time.
-#     RIVER_CURRENT = 'WEAK' # Change to 'MEDIUM', then 'STRONG'
-    
-#     print(f"########### Analyzing RiverSwim with {RIVER_CURRENT} current ###########")
-
-#     env = RiverSwim(RIVER_CURRENT, SEED)
-#     R, T = env.get_model()
-
-#     # Start with a high discount factor and decrease it
-#     discount_factor = 0.99
-    
-#     while discount_factor >= 0:
-#         # Run value iteration to find the optimal policy for the current gamma
-#         V_opt, policy_opt = policy_iteration(R, T, gamma=discount_factor, tol=1e-3)
-        
-#         # Get the action at the starting state (state 0)
-#         action_at_start = policy_opt[0]
-        
-#         print(f"gamma = {discount_factor:.2f} -> Action at start: {['L', 'R'][action_at_start]}")
-
-#         # Check if the agent chooses to go LEFT (action 0)
-#         if action_at_start == 0:
-#             print("\n" + "="*50)
-#             print(f"TIPPING POINT FOUND for {RIVER_CURRENT} current!")
-#             print(f"The largest discount factor for which the agent goes LEFT is {discount_factor:.2f}")
-#             print(f"The optimal value function at this point is: \n{V_opt}")
-#             print(f"The optimal policy at this point is: \n{[['L', 'R'][a] for a in policy_opt]}")
-#             print("="*50 + "\n")
-#             break # We found our answer, so exit the loop
-
-#         # If the action is still RIGHT, decrease gamma and try again
-#         discount_factor -= 0.01
-
-#     # This will be printed if the loop finishes without finding a LEFT action
-#     if discount_factor < 0:
-#         print("No tipping point found. The agent always goes RIGHT.")

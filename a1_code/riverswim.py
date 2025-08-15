@@ -16,7 +16,7 @@ class RiverSwim:
         # Configure reward function
         R = np.zeros((self.num_states, self.num_actions))
         R[0, 0] = 0.005
-        R[5, 1] = 1.
+        R[5, 1] = 10.
 
         # Configure transition function
         T = np.zeros((self.num_states, self.num_actions, self.num_states))
